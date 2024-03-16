@@ -1,4 +1,0 @@
-name: PlayerMessages
-version: '${project.version}'
-main: plugin.playermessages.PlayerMessages
-api-version: '1.20'
