@@ -1,7 +1,6 @@
 package plugin.playermessages.database;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import plugin.playermessages.PlayerMessages;
 import java.util.List;
 import java.util.Set;
