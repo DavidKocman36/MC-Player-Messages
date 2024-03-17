@@ -7,17 +7,43 @@ import plugin.playermessages.listeners.PlayerDeathListener;
 import plugin.playermessages.listeners.PlayerJoinedListener;
 import plugin.playermessages.listeners.PlayerLeftListener;
 
+import java.sql.SQLException;
+
 public final class PlayerMessages extends JavaPlugin {
 
+    private DatabaseManager db = null;
     @Override
     public void onEnable() {
-        //new dbmanager
-        DatabaseManager db = new DatabaseManager(this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinedListener(db), this);
-        getServer().getPluginManager().registerEvents(new PlayerLeftListener(db), this);
+        try {
+            this.db = new DatabaseManager(this);
+        } catch (SQLException e) {
+            Bukkit.getLogger().info("[PlayerMessages] Error accessing the database: " + e.getMessage());
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
+        getServer().getPluginManager().registerEvents(new PlayerJoinedListener(this.db), this);
+        getServer().getPluginManager().registerEvents(new PlayerLeftListener(this.db), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(this.db), this);
 
         this.saveDefaultConfig();
-        db.parseYamlDb();
+
+        try {
+            db.parseYamlDb();
+        } catch (SQLException e) {
+            Bukkit.getLogger().info("[PlayerMessages] Error parsing config: " + e.getMessage());
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
         Bukkit.getLogger().info("[PlayerMessages] The plugin has started!");
+    }
+
+    @Override
+    public void onDisable() {
+        try {
+            this.db.closeConnection();
+        } catch (SQLException e) {
+            Bukkit.getLogger().info("[PlayerMessages] Error closing database: " + e.getMessage());
+        }
+        Bukkit.getLogger().info("[PlayerMessages] The plugin has been disabled!");
     }
 }

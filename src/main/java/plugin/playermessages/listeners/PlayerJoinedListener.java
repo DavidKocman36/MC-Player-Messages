@@ -6,6 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import plugin.playermessages.database.DatabaseManager;
 
+import java.util.List;
+import java.util.Random;
+
 public class PlayerJoinedListener implements Listener {
 
     private final DatabaseManager db;
@@ -16,6 +19,11 @@ public class PlayerJoinedListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e)
     {
-        Bukkit.getLogger().info(e.getPlayer().getDisplayName() + " jee tu!");
+        // if player is in database
+        // else if he is not
+        List<String> messages = this.db.getJoin_mess();
+        Random rand = new Random();
+        String mess = messages.get(rand.nextInt(messages.size()));
+        e.setJoinMessage(e.getPlayer().getDisplayName() + " " + mess);
     }
 }
