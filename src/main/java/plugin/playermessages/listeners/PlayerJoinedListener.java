@@ -2,7 +2,6 @@ package plugin.playermessages.listeners;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.bukkit.Bukkit;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,10 +29,10 @@ public class PlayerJoinedListener implements Listener {
     {
         // if player is in database
         List<String> messages;
-        String message;
-        if((message = this.db.getData(e.getPlayer().getDisplayName(), Config.mess_join_column)) != null){
-            Type listType = new TypeToken<ArrayList<String>>(){}.getType();
-            messages = new Gson().fromJson(message, listType);
+        String message = this.db.getData(e.getPlayer().getDisplayName(), Config.mess_join_column);
+        Type listType = new TypeToken<ArrayList<String>>(){}.getType();
+        messages = new Gson().fromJson(message, listType);
+        if(message != null && !messages.isEmpty()){
             this.printMessage(messages, e);
         }
         else {
@@ -47,11 +46,11 @@ public class PlayerJoinedListener implements Listener {
 
     private void printMessage(List<String> messages, PlayerJoinEvent e)
     {
-        //^.*%player%.*$
         Pattern p = Pattern.compile("^.*%player%.*$");
         Random rand = new Random();
         String mess = messages.get(rand.nextInt(messages.size()));
         Matcher m = p.matcher(mess);
+
         if(m.matches()){
             mess = mess.replace("%player%", e.getPlayer().getDisplayName());
             e.setJoinMessage(ChatColor.translateAlternateColorCodes('&', "&e"+ mess));

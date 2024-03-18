@@ -6,7 +6,6 @@ import plugin.playermessages.PlayerMessages;
 import plugin.playermessages.utils.Config;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
