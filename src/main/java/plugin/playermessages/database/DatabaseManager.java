@@ -5,11 +5,8 @@ import org.bukkit.Bukkit;
 import plugin.playermessages.PlayerMessages;
 import plugin.playermessages.utils.Config;
 
-import javax.xml.crypto.Data;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -65,7 +62,7 @@ public class DatabaseManager {
         this.leave_mess = this.plugin.getConfig().getStringList("leave-messages");
         this.death_mess = this.plugin.getConfig().getStringList("death-messages");
 
-        // Has to be in DB for more optimal search in case a lott of players
+        // Has to be in DB for more optimal search in case a lot of players
         // has custom messages
         Set<String> keys = this.plugin.getConfig().getConfigurationSection("players").getKeys(false);
         Gson gson = new Gson();
@@ -84,15 +81,18 @@ public class DatabaseManager {
         }
     }
 
-    public List<String> getData(String player, String column) {
-        // TODO
-        /*try(Statement statement = this.connection.createStatement()){
-            statement.execute("INSERT INTO "+ Config.players_table +" ("+Config.player_colum +","+ Config.mess_join_column +","+ Config.mess_leave_column +","+ Config.mess_death_column + ")" +
-                    " VALUES('"+i+"','"+gson.toJson(join_mess)+"','"+gson.toJson(leave_mess)+"','"+gson.toJson(death_mess)+"');"
+    public String getData(String player, String column) {
+        String result = "";
+        try(Statement statement = this.connection.createStatement()){
+            ResultSet res = statement.executeQuery("SELECT " + column + " FROM "+ Config.players_table +
+                    " WHERE " + Config.player_colum + "='" + player + "'"
             );
+            while (res.next()){
+                result = res.getString(column);
+            }
         } catch (SQLException e) {
             Bukkit.getLogger().info("[PlayerMessages] Error retrieving data: " + e.getMessage());
-        }*/
-        return null;
+        }
+        return result.isEmpty() ? null : result;
     }
 }
