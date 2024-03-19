@@ -28,13 +28,11 @@ public class PlayerDeathListener implements Listener {
     {
         // if player is in database
         List<String> messages;
-        String message;
-        if((message = this.db.getData(e.getEntity().getDisplayName(), Config.mess_death_column)) != null){
-            Type listType = new TypeToken<ArrayList<String>>(){}.getType();
-            messages = new Gson().fromJson(message, listType);
-            if(!messages.isEmpty()) {
-                this.printMessage(messages, e);
-            }
+        String message = this.db.getData(e.getEntity().getDisplayName(), Config.mess_death_column);
+        Type listType = new TypeToken<ArrayList<String>>(){}.getType();
+        messages = new Gson().fromJson(message, listType);
+        if(message != null && !messages.isEmpty()){
+            this.printMessage(messages, e);
         }
         else {
             // else if he is not

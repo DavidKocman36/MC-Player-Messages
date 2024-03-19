@@ -1,0 +1,27 @@
+# examples of messages
+join-messages:
+  - 'is here!'
+  - 'arrived on &btime'
+  - 'The lovely %player% has arrived'
+
+leave-messages:
+  - 'just left!'
+
+death-messages:
+  - 'dies!'
+  - 'The bravest of the brave, &c%player%, has been killed by %entity%!'
+
+players:
+  player1:
+    join-messages:
+      - 'is here'
+
+    leave-messages:
+      - 'just went!'
+
+    death-messages:
+      - 'is death :/'
+
+  player2:
+    join-messages:
+      - 'just got here'

@@ -27,13 +27,11 @@ public class PlayerLeftListener implements Listener {
     {
         // if player is in database
         List<String> messages;
-        String message;
-        if((message = this.db.getData(e.getPlayer().getDisplayName(), Config.mess_leave_column)) != null){
-            Type listType = new TypeToken<ArrayList<String>>(){}.getType();
-            messages = new Gson().fromJson(message, listType);
-            if(!messages.isEmpty()) {
-                this.printMessage(messages, e);
-            }
+        String message = this.db.getData(e.getPlayer().getDisplayName(), Config.mess_leave_column);
+        Type listType = new TypeToken<ArrayList<String>>(){}.getType();
+        messages = new Gson().fromJson(message, listType);
+        if(message != null && !messages.isEmpty()){
+            this.printMessage(messages, e);
         }
         else {
             // else if he is not
