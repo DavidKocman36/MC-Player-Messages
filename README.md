@@ -30,7 +30,7 @@ The `%player%` placeholder holds the corresponding player's name. It can be used
 
 The `%entity%` placeholder only can be used in death messages and holds the name of the entity that killed the player. Both placeholders also can be used in one string at the same time.
 
-Chat color can also be altered with `'&'` and respective color code. For example, `&c` makes the text red.
+Chat color can also be altered with `'&'` and respective color code, for example, `&c` makes the text red.
 
 ```
 join-messages:
