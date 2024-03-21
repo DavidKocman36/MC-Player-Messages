@@ -3,6 +3,8 @@ A minecraft plugin that lets you customize player join, leave and death messages
 
 Minecraft version: 1.20
 
+This plugin is more suited for smaller servers just to have fun with friends.
+
 ## Usage
 
 A .jar file is available in releases. Just copy and paste the .jar and you are good to go.
