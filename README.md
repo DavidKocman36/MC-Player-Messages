@@ -39,6 +39,8 @@ join-messages:
 death-messages:
     - 'The mighty %player% was killed by %entity%'
 ```
+So whenever a player dies, the following can be seen:
+>The mighty Player was killed by zombie
 
 An example config can be found in `src/.../resources` folder.
 
